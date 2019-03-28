@@ -4,17 +4,6 @@ import bs4
 from urllib.parse import quote_plus
 import re
 
-reddit = praw.Reddit(
-		client_id='CLIENT_ID',
-
-	    client_secret='SECRET',
-
-	    username='brandnewsentencebot',
-
-	   	password='PASSWORD',
-
-	   	user_agent='AGENT')
-
 subreddit = reddit.subreddit("testingground4bots")
 keyphrase = "r/brandnewsentence"
 reply_template = "Actually, this phrase already exists in {}. ^((not counting special characters and numbers\\))\n\n\n[About the Library of Babel](https://libraryofbabel.info/About.html) \n\n^(I'm a bot, beep boop. Contact my creator u/C0NSTABEL to share your ideas, complaints or love for me :\\))"
@@ -44,6 +33,12 @@ def search(text):
     return str(exact_url)
 
 def main():
+	reddit = praw.Reddit(
+		client_id='CLIENT_ID',
+		client_secret='SECRET',
+		username='brandnewsentencebot',
+		password='PASSWORD',
+		user_agent='AGENT')
     for comment in subreddit.stream.comments():
         if keyphrase not in comment.body.lower():
             continue
