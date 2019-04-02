@@ -45,7 +45,9 @@ def search(text):
 def main():
 	fail_counter = 0
 	for comment in subreddit.stream.comments():
-		if keyphrase not in comment.body.lower() or comment.subreddit == "BrandNewSentence": #this should prevent it from showing up in that subreddit right?
+		if keyphrase not in comment.body.lower() or comment.subreddit == "BrandNewSentence": 
+			#that line used to be from or: and comment.subreddit != "brandnewsentence"
+			#this should prevent it from showing up in that subreddit right?
 			continue
 		parent = comment.parent()
 		if type(parent) != praw.models.reddit.comment.Comment or str(comment.author.name).lower() in blacklist:
@@ -70,7 +72,8 @@ def main():
 		try:
 			comment.reply(full_reply)
 			reddit.redditor("C0NSTABEL").message("results!","reddit.com{}".format(comment.permalink))
-		except praw.exceptions.APIException:	#If the comment limit is reached it just skips that comment
+		except praw.exceptions.APIException:	
+			#If the comment limit is reached it just skips that comment
 			fail_counter += 1
 			print("failure ({} times)".format(str(fail_counter)))
 			if fail_counter == 50:
